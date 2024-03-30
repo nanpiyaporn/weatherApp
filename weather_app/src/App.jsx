@@ -1,21 +1,18 @@
-import { useState } from 'react'
-
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import Search from './Components/Search';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const handleOnSearchChange = (searchData) => {
+    console.log(searchData);
+  }
+   
   return (
-    <>
-      <div>
-        <h1>
-        Welcome to Weather App
-        </h1>
-        
-      </div>
+    <div className="container">
+      <Search onSearchChange ={handleOnSearchChange}/>
       
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
