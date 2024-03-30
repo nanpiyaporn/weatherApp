@@ -31,7 +31,7 @@ The following **additional** features are implemented:
 
 Details: Still fixing error
 
-[git](https://github.com/nanpiyaporn/weatherApp/blob/master/weather_app/src/assets/weatherapp.gif)
+![weather app](https://github.com/nanpiyaporn/weatherApp/blob/master/weather_app/src/assets/weatherapp.gif)
 
 ## Notes
 
