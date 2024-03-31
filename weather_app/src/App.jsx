@@ -46,6 +46,8 @@ avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
             type="text"
             placeholder="Enter city/town..."
             onChange={(e) => setSearch(e.target.value)}
+            
+           
           />
            <p></p>
           </div>
@@ -57,10 +59,12 @@ avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
         {/* If weather is not undefined display results from API */}
         {typeof weather.main !== "undefined" ? (
           <div>
+            <button onClick={searchPressed}>Search</button>
             <p>Max temperature: {maxTemp}</p>
             <p>Min temperature: {minTemp}</p>
-        <p>Average temperature: {avgTemp}</p>
-            <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
+            <p>Average temperature: {avgTemp}</p>
+            <button onClick={setWeatherData}>Search</button>
+          
             {/* Location  */}
             <p>{weather.name}</p>
 
