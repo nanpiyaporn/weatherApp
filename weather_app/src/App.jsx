@@ -1,40 +1,59 @@
-import { useState } from "react";
-import Search from "./Components/Search";
-import CurrentWeather from "./Components/currentWeather";
-import Forecast from "./Components/forecast";
-import { WEATHER_API_URL, WEATHER_API_KEY } from "./Api";
 import "./App.css";
+import { useState } from "react";
+
+const api = {
+  key: "3794e52b59b49fe753b74fd35eaf52c4",
+  base: "https://api.openweathermap.org/data/2.5/",
+};
 
 function App() {
-  const [currentWeather, setCurrentWeather] = useState(null);
-  const [forecast, setForecast] = useState(null);
+  const [search, setSearch] = useState("");
+  const [weather, setWeather] = useState({});
 
-  const handleOnSearchChange = (searchData) => {
-    const [lat, lon] = searchData.value.split(" ");
-
-    const currentWeatherFetch = fetch(
-      `${WEATHER_API_URL}/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
-    );
-    const forecastFetch = fetch(
-      `${WEATHER_API_URL}/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`
-    );
-
-    Promise.all([currentWeatherFetch, forecastFetch])
-      .then(async (response) => {
-        const weatherResponse = await response[0].json();
-        const forcastResponse = await response[1].json();
-
-        setCurrentWeather({ city: searchData.label, ...weatherResponse });
-        setForecast({ city: searchData.label, ...forcastResponse });
-      })
-      .catch(console.log);
+  /*
+    Search button is pressed. Make a fetch call to the Open Weather Map API.
+  */
+  const searchPressed = () => {
+    fetch(`${api.base}weather?q=${search}&units=metric&APPID=${api.key}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setWeather(result);
+      });
   };
 
   return (
-    <div className="container">
-      <Search onSearchChange={handleOnSearchChange} />
-      {currentWeather && <CurrentWeather data={currentWeather} />}
-      {forecast && <Forecast data={forecast} />}
+    <div className="App">
+      <header className="App-header">
+        {/* HEADER  */}
+        <h1>Weather App</h1>
+
+        {/* Search Box - Input + Button  */}
+        <div>
+          <input
+            type="text"
+            placeholder="Enter city/town..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={searchPressed}>Search</button>
+        </div>
+
+        {/* If weather is not undefined display results from API */}
+        {typeof weather.main !== "undefined" ? (
+          <div>
+            {/* Location  */}
+            <p>{weather.name}</p>
+
+            {/* Temperature Celsius  */}
+            <p>{weather.main.temp}°C</p>
+
+            {/* Condition (Sunny ) */}
+            <p>{weather.weather[0].main}</p>
+            <p>({weather.weather[0].description})</p>
+          </div>
+        ) : (
+          ""
+        )}
+      </header>
     </div>
   );
 }
