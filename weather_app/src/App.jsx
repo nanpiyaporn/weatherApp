@@ -10,6 +10,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [weather, setWeather] = useState({});
   const [weatherData, setWeatherData] = useState(null);
+  const [ctoF,setctoF]= useState(null);
 
 
   /*
@@ -20,8 +21,8 @@ let maxTemp;
 if (weatherData) {
   const temperatures = weatherData.map(day => day.temp);
   maxTemp = Math.max(...temperatures);
- //minTemp = Math.min(...temperatures);
-  //avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
+ minTemp = Math.min(...temperatures);
+  avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
 }
   const searchPressed = () => {
     fetch(`${api.base}weather?q=${search}&units=metric&APPID=${api.key}`)
@@ -56,21 +57,34 @@ if (weatherData) {
         {/* If weather is not undefined display results from API */}
         {typeof weather.main !== "undefined" ? (
           <div>
+            <p>Max temperature: {maxTemp}</p>
+            <p>Min temperature: {minTemp}</p>
+            <p>Average temperature: {avgTemp}</p>
             {/* Location  */}
             <p>{weather.name}</p>
 
             {/* Temperature Celsius  */}
             <p>{weather.main.temp}°C</p>
-
+            {/* Temperature Fahrenheit */}
+            <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
+            {ctoF ? (
+              <p>{(weather.main.temp * 9/5) + 32}°F</p>
+            ) : (
+              <p>{weather.main.temp}°C</p>
+            )}
+            <p>{(weather.main.temp * 9/5) + 32}°F</p>
             {/* Condition (Sunny ) */}
             <p>{weather.weather[0].main}</p>
             <p>({weather.weather[0].description})</p>
             <p>{weatherData && (
-              <div className="dashboard">
+              <div className="stat">
               <p>Max temperature: {maxTemp}</p>
+              <p>Min temperature: {minTemp}</p>
+              <p>Average temperature: {avgTemp}</p>
               
             </div>
       )}</p>
+         <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
           </div>
           
         ) : (
