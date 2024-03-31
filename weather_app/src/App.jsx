@@ -17,12 +17,12 @@ function App() {
     Search button is pressed. Make a fetch call to the Open Weather Map API.
   */
  // Calculate statistics
-let maxTemp;
+let maxTemp, minTemp, avgTemp;
 if (weatherData) {
-  const temperatures = weatherData.map(day => day.temp);
-  maxTemp = Math.max(...temperatures);
- minTemp = Math.min(...temperatures);
-  avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
+ const temperatures = weatherData.map(day => day.temp);
+ maxTemp = Math.max(...temperatures);
+minTemp = Math.min(...temperatures);
+avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
 }
   const searchPressed = () => {
     fetch(`${api.base}weather?q=${search}&units=metric&APPID=${api.key}`)
@@ -59,7 +59,7 @@ if (weatherData) {
           <div>
             <p>Max temperature: {maxTemp}</p>
             <p>Min temperature: {minTemp}</p>
-            <p>Average temperature: {avgTemp}</p>
+        <p>Average temperature: {avgTemp}</p>
             <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
             {/* Location  */}
             <p>{weather.name}</p>
@@ -70,21 +70,17 @@ if (weatherData) {
             {ctoF ? (
               <p>{(weather.main.temp * 9/5) + 32}°F</p>
             ) : (
-              <p>{weather.main.temp}°C</p>
+              <p>{/*weather.main.temp*/}</p>
             )}
-            <p>{(weather.main.temp * 9/5) + 32}°F</p>
             {/* Condition (Sunny ) */}
             <p>{weather.weather[0].main}</p>
             <p>({weather.weather[0].description})</p>
             <p>{weatherData && (
               <div className="stat">
-              <p>Max temperature: {maxTemp}</p>
-              <p>Min temperature: {minTemp}</p>
-              <p>Average temperature: {avgTemp}</p>
-              
+             
             </div>
       )}</p>
-         <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
+        
           </div>
           
         ) : (
