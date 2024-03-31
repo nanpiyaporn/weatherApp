@@ -59,11 +59,11 @@ avgTemp = temperatures.reduce((a, b) => a + b, 0) / temperatures.length;
         {/* If weather is not undefined display results from API */}
         {typeof weather.main !== "undefined" ? (
           <div>
-            <button onClick={searchPressed}>Search</button>
-            <p>Max temperature: {maxTemp}</p>
-            <p>Min temperature: {minTemp}</p>
-            <p>Average temperature: {avgTemp}</p>
-            <button onClick={setWeatherData}>Search</button>
+            
+            <p>Max temperature: {maxTemp}{weather.main.temp_max}</p>
+            <p>Min temperature: {minTemp}{weather.main.temp_min}</p>
+            <p>Average temperature: {avgTemp}{(weather.main.temp_min)+(weather.main.temp_max)/2}</p>
+            <button onClick={setctoF}>Taggle  Fahrenheit</button>
           
             {/* Location  */}
             <p>{weather.name}</p>
