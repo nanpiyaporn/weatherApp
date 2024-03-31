@@ -60,13 +60,13 @@ if (weatherData) {
             <p>Max temperature: {maxTemp}</p>
             <p>Min temperature: {minTemp}</p>
             <p>Average temperature: {avgTemp}</p>
+            <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
             {/* Location  */}
             <p>{weather.name}</p>
 
             {/* Temperature Celsius  */}
             <p>{weather.main.temp}°C</p>
             {/* Temperature Fahrenheit */}
-            <button onClick={() => setctoF(!ctoF)}>Toggle °C/°F</button>
             {ctoF ? (
               <p>{(weather.main.temp * 9/5) + 32}°F</p>
             ) : (
